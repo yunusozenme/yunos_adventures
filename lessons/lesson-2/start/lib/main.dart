@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const GameContainer(title: "Yuno's Adventures"),
+      home: const GameContainer(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -36,9 +36,8 @@ class _GameContainerState extends State<GameContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = Vector2(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     return Scaffold(
-      body: GameWidget(game: YunosAdventures(screenSize)),
+      body: GameWidget(game: YunosAdventures()),
     );
   }
 }
