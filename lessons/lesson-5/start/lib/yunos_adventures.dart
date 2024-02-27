@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
-import 'package:yunos_adventures/player.dart';
 import 'package:yunos_adventures/quick_sprite.dart';
 
 class YunosAdventures extends FlameGame {
@@ -16,11 +15,7 @@ class YunosAdventures extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-    final background = QuickSprite(spriteSize: screenSize.y, spritePath: 'world_background.png', coordinatePlane: CoordinatePlane.Y)
-      ..addToParent(this);
-
-    final player = Player();
-    await add(player);
-    player.switchState(PlayerState.run);
+    final world = QuickSprite(spriteSize: screenSize.y, spritePath: 'TileSetCombined.png', coordinatePlane: CoordinatePlane.Y)
+        ..addToParent(this);
   }
 }

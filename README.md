@@ -19,4 +19,11 @@ Sprite Component, Image Attribution, Loading Images from Disk
 Lesson 3<br/>
 Quick Sprite
 
+Lesson 4<br/>
+Creating a Sprite Sheet Image using Gimp
+
+Lesson 5<br/>
+Sprite Animation Group Component, Creating Sprite Animation, Creating an Animated Character
+
+
 <br/>.. more lessons will be added
