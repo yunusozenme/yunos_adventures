@@ -16,7 +16,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef 
 
   @override
   Future<void> onLoad() async {
-    anchor = const Anchor(0.35, 1);
     final spriteSheet = SpriteSheet(image: await gameRef.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
 
     final idleAnimation = spriteSheet.createAnimation(row: 0, stepTime: 0.4, to: 2);

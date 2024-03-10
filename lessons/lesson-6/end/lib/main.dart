@@ -6,7 +6,6 @@ import 'package:yunos_adventures/yunos_adventures.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Flame.device.fullScreen();
-  await Flame.device.setLandscape();
   runApp(const MyApp());
 }
 
@@ -39,7 +38,7 @@ class _GameContainerState extends State<GameContainer> {
   Widget build(BuildContext context) {
     final screenSize = Vector2(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
     return Scaffold(
-      body: GameWidget(game: YunosAdventures()),
+      body: GameWidget(game: YunosAdventures(screenSize)),
     );
   }
 }

@@ -25,5 +25,14 @@ Creating a Sprite Sheet Image using Gimp
 Lesson 5<br/>
 Sprite Animation Group Component, Creating Sprite Animation, Creating an Animated Character
 
+Lesson 6<br/>
+Anchor
+
+Lesson 7<br/>
+Concept of World, Camera, Viewport and Viewfinder
+
+Lesson 8<br/>
+World, Camera, Viewport and Viewfinder
+
 
 <br/>.. more lessons will be added
