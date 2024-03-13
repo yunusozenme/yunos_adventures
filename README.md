@@ -34,5 +34,8 @@ Concept of World, Camera, Viewport and Viewfinder
 Lesson 8<br/>
 World, Camera, Viewport and Viewfinder
 
+Lesson 9<br/>
+Dynamic positioning and scaling
+
 
 <br/>.. more lessons will be added

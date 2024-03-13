@@ -10,7 +10,7 @@ class YunosAdventures extends FlameGame {
   final _player = Player();
 
   // initial values
-  Vector2 get _positionPlayerInitial => Vector2(2*_tileX, 3.25*_tileY);
+  Vector2 get _positionPlayerInitial => Vector2(2*_tileX, 13*_tileY);
   Vector2 get _scalingPlayerInitial => Vector2.all(_tileX/_player.width);
   static const _anchorCameraInitial = Anchor(0.25, 0.75);
   static const _zoomCameraInitial = 2.0;
@@ -18,7 +18,7 @@ class YunosAdventures extends FlameGame {
   @override
   Future<void> onLoad() async {
     _tileX = size.x / 10;
-    _tileY = size.y / 5;
+    _tileY = size.y / 20;
     final background = QuickSprite(spriteSize: size.y, spritePath: 'world_background.png', coordinatePlane: CoordinatePlane.Y);
     await world.addAll([background, _player]);
 
