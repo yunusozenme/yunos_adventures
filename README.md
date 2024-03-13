@@ -37,5 +37,7 @@ World, Camera, Viewport and Viewfinder
 Lesson 9<br/>
 Dynamic positioning and scaling
 
+Lesson 10<br/>
+Creating horizontally symmetrical background images using Gimp
 
 <br/>.. more lessons will be added
