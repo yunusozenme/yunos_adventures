@@ -35,9 +35,12 @@ Lesson 8<br/>
 World, Camera, Viewport and Viewfinder
 
 Lesson 9<br/>
-Dynamic positioning and scaling
+Different sizes and ratios in mobile devices
 
 Lesson 10<br/>
 Creating horizontally symmetrical background images using Gimp
+
+Lesson 11<br/>
+Delta time, Character movement, Dynamic movement, Update mechanism, Frame update
 
 <br/>.. more lessons will be added

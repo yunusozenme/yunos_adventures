@@ -14,10 +14,6 @@ enum PlayerState {
 
 class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef {
 
-  final double _speed;
-  bool _isRunning = false;
-  Player(this._speed);
-
   @override
   Future<void> onLoad() async {
     anchor = const Anchor(0.35, 1);
@@ -46,20 +42,5 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef 
     current = PlayerState.idle;
   }
 
-  void _switchState(PlayerState playerState) => current = playerState;
-
-  void run() {
-    _switchState(PlayerState.run);
-    _isRunning = true;
-  }
-  void stop() {
-    _switchState(PlayerState.idle);
-    _isRunning = false;
-  }
-
-  @override
-  void update(double dt) {
-    if(_isRunning) x += _speed*dt;
-    super.update(dt);
-  }
+  void switchState(PlayerState playerState) => current = playerState;
 }
