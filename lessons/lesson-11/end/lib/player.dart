@@ -13,13 +13,10 @@ enum PlayerState {
   slide,
 }
 
-class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef {
-
-  late final YunosAdventures _game;
+class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<YunosAdventures> {
 
   @override
   Future<void> onLoad() async {
-    _game = game as YunosAdventures;
     anchor = const Anchor(0.35, 1);
     final spriteSheet = SpriteSheet(image: await gameRef.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
 
@@ -54,7 +51,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef 
   void update(double dt) {
     switch(current) {
       case PlayerState.run:
-        x += _game.playerSpeed*dt;
+        x += gameRef.playerSpeed*dt;
         break;
       default:{}
     }
