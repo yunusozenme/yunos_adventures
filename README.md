@@ -41,6 +41,6 @@ Lesson 10<br/>
 Creating horizontally symmetrical background images using Gimp
 
 Lesson 11<br/>
-Delta time, Character movement, Dynamic movement, Update mechanism, Frame update
+Delta time, Character movement, Update mechanism, Frame update, Game reference
 
 <br/>.. more lessons will be added

@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
+import 'package:yunos_adventures/yunos_adventures.dart';
 
 enum PlayerState {
   idle,
@@ -14,12 +15,11 @@ enum PlayerState {
 
 class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef {
 
-  final double _speed;
-  bool _isRunning = false;
-  Player(this._speed);
+  late final YunosAdventures _game;
 
   @override
   Future<void> onLoad() async {
+    _game = game as YunosAdventures;
     anchor = const Anchor(0.35, 1);
     final spriteSheet = SpriteSheet(image: await gameRef.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
 
@@ -47,19 +47,17 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef 
   }
 
   void _switchState(PlayerState playerState) => current = playerState;
-
-  void run() {
-    _switchState(PlayerState.run);
-    _isRunning = true;
-  }
-  void stop() {
-    _switchState(PlayerState.idle);
-    _isRunning = false;
-  }
+  void run() => _switchState(PlayerState.run);
+  void stop() => _switchState(PlayerState.idle);
 
   @override
   void update(double dt) {
-    if(_isRunning) x += _speed*dt;
+    switch(current) {
+      case PlayerState.run:
+        x += _game.playerSpeed*dt;
+        break;
+      default:{}
+    }
     super.update(dt);
   }
 }
