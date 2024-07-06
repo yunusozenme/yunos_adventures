@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:yunos_adventures/direction.dart';
 import 'package:yunos_adventures/yunos_adventures.dart';
 
 enum PlayerState {
@@ -15,7 +14,6 @@ enum PlayerState {
 }
 
 class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<YunosAdventures> {
-  Direction _playerDirection = Direction.right;
 
   @override
   Future<void> onLoad() async {
@@ -49,34 +47,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
   void run() => _switchState(PlayerState.run);
   void stop() => _switchState(PlayerState.idle);
 
-  void _switchDirection() {
-    flipHorizontally();
-    switch(_playerDirection) {
-      case Direction.left:
-        _playerDirection = Direction.right;
-      case Direction.right:
-        _playerDirection = Direction.left;
-    }
-  }
-
   @override
   void update(double dt) {
-    _movePlayer(dt);
-    super.update(dt);
-  }
-
-  void _movePlayer(double dt) {
     switch(current) {
       case PlayerState.run:
-        if(_playerDirection.name != gameRef.controllerState.name) _switchDirection();
-        switch(_playerDirection) {
-          case Direction.right:
-            x += gameRef.playerSpeed*dt;
-          case Direction.left:
-            x -= gameRef.playerSpeed*dt;
-        }
+        x += gameRef.playerSpeed*dt;
         break;
       default:{}
     }
+    super.update(dt);
   }
 }

@@ -35,12 +35,24 @@ Lesson 8<br/>
 World, Camera, Viewport and Viewfinder
 
 Lesson 9<br/>
-Different sizes and ratios in mobile devices
+Different Sizes and Ratios in Mobile Devices
 
 Lesson 10<br/>
 Creating horizontally symmetrical background images using Gimp
 
 Lesson 11<br/>
 Delta Time, Character Movement, Update Mechanism, Frame Update, Game Reference
+
+Lesson 12<br/>
+Custom Game Controller, Joypad, Tap Callbacks, Transparency
+
+Lesson 13<br/>
+Custom Game Controller, Tap Callbacks, Contains Local Point, Direction, Controller State
+
+Lesson 14<br/>
+Custom Game Controller, Animating Controller Stick, Controller State, Handling Callbacks
+
+Lesson 15<br/>
+Custom Game Controller, Direction Mechanism
 
 <br/>.. more lessons will be added
