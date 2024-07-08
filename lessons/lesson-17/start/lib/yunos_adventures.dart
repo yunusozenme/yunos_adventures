@@ -1,12 +1,11 @@
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:yunos_adventures/controller.dart';
 import 'package:yunos_adventures/direction.dart';
 import 'package:yunos_adventures/player.dart';
 import 'package:yunos_adventures/quick_sprite.dart';
 
-class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
+class YunosAdventures extends FlameGame {
   late final double _tileX;
   late final double _tileY;
   final _player = Player();

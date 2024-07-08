@@ -1,17 +1,15 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flutter/services.dart';
 import 'package:yunos_adventures/direction.dart';
 import 'package:yunos_adventures/quick_sprite.dart';
 import 'package:yunos_adventures/yunos_adventures.dart';
 
-typedef OnTapCallBack = void Function(ControllerState);
-class Controller extends PositionComponent with HasGameRef<YunosAdventures>, TapCallbacks, KeyboardHandler {
+class Controller extends PositionComponent with HasGameRef<YunosAdventures>, TapCallbacks {
   late final QuickSprite _background;
   late final QuickSprite _stick;
   late final double _stickOffset;
   final double controllerSize;
-  final OnTapCallBack onTap;
+  final Function onTap;
 
   Controller({required this.controllerSize, required this.onTap});
 
@@ -55,13 +53,5 @@ class Controller extends PositionComponent with HasGameRef<YunosAdventures>, Tap
     if(gameRef.controllerState == ControllerState.right && _stick.x < _stickOffset) _stick.x += controllerSize*dt;
     if(gameRef.controllerState == ControllerState.left && _stick.x > -_stickOffset) _stick.x -= controllerSize*dt;
     if(gameRef.controllerState == ControllerState.middle) _stick.x = 0;
-  }
-
-  @override
-  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    if(event.physicalKey == PhysicalKeyboardKey.keyA) onTap(ControllerState.left);
-    else if(event.physicalKey == PhysicalKeyboardKey.keyD) onTap(ControllerState.right);
-    else if(event.physicalKey == PhysicalKeyboardKey.keyS) onTap(ControllerState.middle);
-    return false;
   }
 }
