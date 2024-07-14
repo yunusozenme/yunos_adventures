@@ -5,7 +5,6 @@ import 'package:yunos_adventures/controller.dart';
 import 'package:yunos_adventures/direction.dart';
 import 'package:yunos_adventures/player.dart';
 import 'package:yunos_adventures/quick_sprite.dart';
-import 'package:yunos_adventures/tappable_sprite.dart';
 
 class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
   late final double _tileX;
@@ -14,7 +13,7 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
   late final Controller _controller;
   ControllerState _controllerState = ControllerState.middle;
   ControllerState get controllerState => _controllerState;
-  late final TappableSprite _attackButton;
+
 
   // initial values
   Vector2 get _positionPlayerInitial => Vector2(2*_tileX, 3.25*_tileY);
@@ -23,7 +22,6 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
   static const _zoomCameraInitial = 2.0;
   double get playerSpeed => _tileX/2;
   double get _controllerSize => _tileY;
-  double get _attackButtonSize => _tileY*0.80;
 
   @override
   Future<void> onLoad() async {
@@ -37,10 +35,7 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
 
     _controller = Controller(controllerSize: _controllerSize, onTap: onTapController)
       ..x = 1.5*_tileX ..y = 4*_tileY;
-    _attackButton = TappableSprite(spritePath: 'button_attack.png', spriteSize: _attackButtonSize,
-        alpha: 180, coordinatePlane: CoordinatePlane.Y, onTapDown: _player.attack)
-      ..x = 9*_tileX ..y = 4*_tileY;
-    camera.viewport.addAll([_controller, _attackButton]);
+    camera.viewport.add(_controller);
 
     camera.viewfinder.anchor = _anchorCameraInitial;
     camera.viewfinder.zoom = _zoomCameraInitial;

@@ -1,6 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
-import 'package:flame/geometry.dart';
 import 'package:flame/sprite.dart';
 import 'package:yunos_adventures/direction.dart';
 import 'package:yunos_adventures/yunos_adventures.dart';
@@ -18,13 +16,9 @@ enum PlayerState {
 
 class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<YunosAdventures> {
   Direction _playerDirection = Direction.right;
-  late double _playerSpeed;
-  double _attackRotation = tau/18; // 20 degrees
-  bool _inTransition = false;
 
   @override
   Future<void> onLoad() async {
-    _playerSpeed = gameRef.playerSpeed;
     anchor = const Anchor(0.35, 1);
     final spriteSheet = SpriteSheet(image: await gameRef.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
 
@@ -51,24 +45,12 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
     current = PlayerState.idle;
   }
 
-  void _switchState(PlayerState playerState) {
-    if(!_inTransition) current = playerState;
-  }
+  void _switchState(PlayerState playerState) => current = playerState;
   void run() => _switchState(PlayerState.run);
   void stop() => _switchState(PlayerState.idle);
 
-  void attack() {
-    _switchState(PlayerState.attack);
-    _inTransition = true;
-    final effectController = EffectController(duration: 0.25, reverseDuration: 0.10, atMaxDuration: 0.10, atMinDuration: 0.10);
-    final rotationEffect = RotateEffect.by(_attackRotation, effectController, onComplete: _resetState)
-      ..addToParent(this);
-  }
-
   void _switchDirection() {
     flipHorizontally();
-    _playerSpeed = - _playerSpeed;
-    _attackRotation = - _attackRotation;
     switch(_playerDirection) {
       case Direction.left:
         _playerDirection = Direction.right;
@@ -79,7 +61,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
 
   @override
   void update(double dt) {
-    if(!_inTransition) _movePlayer(dt);
+    _movePlayer(dt);
     super.update(dt);
   }
 
@@ -87,13 +69,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
     switch(current) {
       case PlayerState.run:
         if(_playerDirection.name != gameRef.controllerState.name) _switchDirection();
-        x += _playerSpeed*dt;
+        switch(_playerDirection) {
+          case Direction.right:
+            x += gameRef.playerSpeed*dt;
+          case Direction.left:
+            x -= gameRef.playerSpeed*dt;
+        }
+        break;
       default:{}
     }
-  }
-
-  void _resetState() {
-    _inTransition = false;
-    _switchState(PlayerState.idle);
   }
 }
