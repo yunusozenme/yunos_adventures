@@ -10,7 +10,6 @@ class TappableSprite extends PositionComponent with TapCallbacks {
   final CoordinatePlane _coordinatePlane;
   final int _alpha;
   final OnTapDown _onTapDown;
-  Vector2 get _currentScale => _quickSprite.scale;
 
   TappableSprite({required String spritePath, required double spriteSize, required CoordinatePlane coordinatePlane,
       int alpha = 240, required OnTapDown onTapDown})
@@ -24,16 +23,7 @@ class TappableSprite extends PositionComponent with TapCallbacks {
   }
 
   @override
-  void onTapDown(TapDownEvent event) {
-    _quickSprite.scale = _currentScale * 1.1;
-    _onTapDown();
-  }
-
-  @override
-  void onTapUp(TapUpEvent event) => _quickSprite.scale = _currentScale / 1.1;
-
-  @override
-  void onTapCancel(TapCancelEvent event) => _quickSprite.scale = _currentScale / 1.1;
+  void onTapDown(TapDownEvent event) => _onTapDown();
 
   @override
   bool containsLocalPoint(Vector2 point) {
