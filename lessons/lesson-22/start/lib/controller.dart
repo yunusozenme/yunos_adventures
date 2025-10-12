@@ -12,9 +12,8 @@ class Controller extends PositionComponent with HasGameRef<YunosAdventures>, Tap
   late final double _stickOffset;
   final double controllerSize;
   final OnTapCallBack onTap;
-  final Function onJump;
 
-  Controller({required this.controllerSize, required this.onTap, required this.onJump});
+  Controller({required this.controllerSize, required this.onTap});
 
   @override
   Future<void> onLoad() async {
@@ -63,7 +62,6 @@ class Controller extends PositionComponent with HasGameRef<YunosAdventures>, Tap
     if(event.physicalKey == PhysicalKeyboardKey.keyA) onTap(ControllerState.left);
     else if(event.physicalKey == PhysicalKeyboardKey.keyD) onTap(ControllerState.right);
     else if(event.physicalKey == PhysicalKeyboardKey.keyS) onTap(ControllerState.middle);
-    else if(event.physicalKey == PhysicalKeyboardKey.space) onJump();
     return false;
   }
 }

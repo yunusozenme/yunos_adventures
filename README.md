@@ -95,4 +95,8 @@ Attack Button
 
 Scale in Flame
 
+##### Lesson 22
+
+Jump Animation, Displacement Formula for Jumping
+
 <br/>.. more lessons will be added

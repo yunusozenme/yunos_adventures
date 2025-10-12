@@ -17,13 +17,11 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
   late final TappableSprite _attackButton;
 
   // initial values
-  Vector2 get positionPlayerInitial => Vector2(2*_tileX, 3.25*_tileY);
+  Vector2 get _positionPlayerInitial => Vector2(2*_tileX, 3.25*_tileY);
   Vector2 get _scalingPlayerInitial => Vector2.all(_tileX/_player.width);
   static const _anchorCameraInitial = Anchor(0.25, 0.75);
   static const _zoomCameraInitial = 2.0;
   double get playerSpeed => _tileX/2;
-  double get jumpSpeed => _tileY;
-  double get gravity => _tileY*2;
   double get _controllerSize => _tileY;
   double get _attackButtonSize => _tileY*0.80;
 
@@ -34,10 +32,10 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
     final background = QuickSprite(spriteSize: size.y, spritePath: 'world_background.png', coordinatePlane: CoordinatePlane.Y);
     await world.addAll([background, _player]);
 
-    _player.position = positionPlayerInitial;
+    _player.position = _positionPlayerInitial;
     _player.scale = _scalingPlayerInitial;
 
-    _controller = Controller(controllerSize: _controllerSize, onTap: _onTapController, onJump: _player.jump)
+    _controller = Controller(controllerSize: _controllerSize, onTap: onTapController)
       ..x = 1.5*_tileX ..y = 4*_tileY;
     _attackButton = TappableSprite(spritePath: 'button_attack.png', spriteSize: _attackButtonSize,
         alpha: 180, coordinatePlane: CoordinatePlane.Y, onTapDown: _player.attack)
@@ -49,7 +47,7 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
     camera.follow(_player);
   }
 
-  void _onTapController(ControllerState controllerState) {
+  void onTapController(ControllerState controllerState) {
     _controllerState = controllerState;
     switch(controllerState) {
       case ControllerState.middle:

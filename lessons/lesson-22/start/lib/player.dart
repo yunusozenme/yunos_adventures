@@ -19,19 +19,12 @@ enum PlayerState {
 class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<YunosAdventures> {
   Direction _playerDirection = Direction.right;
   late double _playerSpeed;
-  late double _jumpSpeed;
-  late double _gravity;
-  late double _initialYPosition;
   double _attackRotation = tau/18; // 20 degrees
-  bool _isAttacking = false;
-  bool _isJumping = false;
+  bool _inTransition = false;
 
   @override
   Future<void> onLoad() async {
     _playerSpeed = gameRef.playerSpeed;
-    _jumpSpeed = gameRef.jumpSpeed;
-    _gravity = gameRef.gravity;
-    _initialYPosition = gameRef.positionPlayerInitial.y;
     anchor = const Anchor(0.35, 1);
     final spriteSheet = SpriteSheet(image: await gameRef.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
 
@@ -58,26 +51,17 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
     current = PlayerState.idle;
   }
 
-  void _switchState(PlayerState playerState) => current = playerState;
-
-  void run() {
-    if(!_isAttacking && !_isJumping){
-      _switchState(PlayerState.run);
-    }
+  void _switchState(PlayerState playerState) {
+    if(!_inTransition) current = playerState;
   }
-
-  void jump() {
-    _switchState(PlayerState.jump);
-    _isJumping = true;
-  }
-
+  void run() => _switchState(PlayerState.run);
   void stop() => _switchState(PlayerState.idle);
 
   void attack() {
     _switchState(PlayerState.attack);
-    _isAttacking = true;
+    _inTransition = true;
     final effectController = EffectController(duration: 0.25, reverseDuration: 0.10, atMaxDuration: 0.10, atMinDuration: 0.10);
-    final rotationEffect = RotateEffect.by(_attackRotation, effectController, onComplete: _onAttackFinished)
+    final rotationEffect = RotateEffect.by(_attackRotation, effectController, onComplete: _resetState)
       ..addToParent(this);
   }
 
@@ -95,44 +79,21 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
 
   @override
   void update(double dt) {
-    _movePlayer(dt);
-    if(_isJumping) _jumpAnimation(dt);
+    if(!_inTransition) _movePlayer(dt);
     super.update(dt);
   }
 
   void _movePlayer(double dt) {
     switch(current) {
       case PlayerState.run:
-        _move(dt);
+        if(_playerDirection.name != gameRef.controllerState.name) _switchDirection();
+        x += _playerSpeed*dt;
       default:{}
     }
   }
-  void _move(double dt) {
-    if(_playerDirection.name != gameRef.controllerState.name) _switchDirection();
-    x += _playerSpeed*dt;
-  }
 
-  void _onAttackFinished() {
-    _isAttacking = false;
+  void _resetState() {
+    _inTransition = false;
     _switchState(PlayerState.idle);
-  }
-
-  void _jumpAnimation(double dt) {
-    if(_initialYPosition >= y) {
-      y -= _jumpSpeed * dt - 1/2 * _gravity * dt * dt;
-      _jumpSpeed -= _gravity * dt;
-      switch(gameRef.controllerState) {
-        case ControllerState.right:
-        case ControllerState.left:
-          _move(dt);
-        default:{}
-      }
-    }
-    else {
-      y = _initialYPosition;
-      _jumpSpeed = gameRef.jumpSpeed;
-      _isJumping = false;
-      _switchState(PlayerState.idle);
-    }
   }
 }
