@@ -99,4 +99,8 @@ Scale in Flame
 
 Jump Animation, Displacement Formula for Jumping
 
+##### Lesson 23
+
+HasGameRef and gameRef deprecated
+
 <br/>.. more lessons will be added

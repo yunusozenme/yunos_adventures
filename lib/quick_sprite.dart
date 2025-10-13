@@ -3,7 +3,7 @@ enum CoordinatePlane {
   X, Y
 }
 
-class QuickSprite extends SpriteComponent with HasGameRef {
+class QuickSprite extends SpriteComponent with HasGameReference {
   final double spriteSize;
   final String spritePath;
   final CoordinatePlane coordinatePlane;
@@ -12,7 +12,7 @@ class QuickSprite extends SpriteComponent with HasGameRef {
 
   @override
   Future<void> onLoad() async {
-    sprite = await gameRef.loadSprite(spritePath);
+    sprite = await game.loadSprite(spritePath);
     size = sprite!.originalSize;
 
     switch(coordinatePlane) {

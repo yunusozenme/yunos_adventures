@@ -6,7 +6,7 @@ import 'package:yunos_adventures/quick_sprite.dart';
 import 'package:yunos_adventures/yunos_adventures.dart';
 
 typedef OnTapCallBack = void Function(ControllerState);
-class Controller extends PositionComponent with HasGameRef<YunosAdventures>, TapCallbacks, KeyboardHandler {
+class Controller extends PositionComponent with HasGameReference<YunosAdventures>, TapCallbacks, KeyboardHandler {
   late final QuickSprite _background;
   late final QuickSprite _stick;
   late final double _stickOffset;
@@ -53,9 +53,9 @@ class Controller extends PositionComponent with HasGameRef<YunosAdventures>, Tap
   }
 
   void _moveStick(double dt) {
-    if(gameRef.controllerState == ControllerState.right && _stick.x < _stickOffset) _stick.x += controllerSize*dt;
-    if(gameRef.controllerState == ControllerState.left && _stick.x > -_stickOffset) _stick.x -= controllerSize*dt;
-    if(gameRef.controllerState == ControllerState.middle) _stick.x = 0;
+    if(game.controllerState == ControllerState.right && _stick.x < _stickOffset) _stick.x += controllerSize*dt;
+    if(game.controllerState == ControllerState.left && _stick.x > -_stickOffset) _stick.x -= controllerSize*dt;
+    if(game.controllerState == ControllerState.middle) _stick.x = 0;
   }
 
   @override

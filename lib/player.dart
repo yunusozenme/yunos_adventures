@@ -16,7 +16,7 @@ enum PlayerState {
   slide,
 }
 
-class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<YunosAdventures> {
+class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameReference<YunosAdventures> {
   Direction _playerDirection = Direction.right;
   late double _playerSpeed;
   late double _jumpSpeed;
@@ -28,12 +28,12 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
 
   @override
   Future<void> onLoad() async {
-    _playerSpeed = gameRef.playerSpeed;
-    _jumpSpeed = gameRef.jumpSpeed;
-    _gravity = gameRef.gravity;
-    _initialYPosition = gameRef.positionPlayerInitial.y;
+    _playerSpeed = game.playerSpeed;
+    _jumpSpeed = game.jumpSpeed;
+    _gravity = game.gravity;
+    _initialYPosition = game.positionPlayerInitial.y;
     anchor = const Anchor(0.35, 1);
-    final spriteSheet = SpriteSheet(image: await gameRef.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
+    final spriteSheet = SpriteSheet(image: await game.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
 
     final idleAnimation = spriteSheet.createAnimation(row: 0, stepTime: 0.4, to: 2);
     final runAnimation = spriteSheet.createAnimation(row: 1, stepTime: 0.2);
@@ -108,7 +108,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
     }
   }
   void _move(double dt) {
-    if(_playerDirection.name != gameRef.controllerState.name) _switchDirection();
+    if(_playerDirection.name != game.controllerState.name) _switchDirection();
     x += _playerSpeed*dt;
   }
 
@@ -121,7 +121,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
     if(_initialYPosition >= y) {
       y -= _jumpSpeed * dt - 1/2 * _gravity * dt * dt;
       _jumpSpeed -= _gravity * dt;
-      switch(gameRef.controllerState) {
+      switch(game.controllerState) {
         case ControllerState.right:
         case ControllerState.left:
           _move(dt);
@@ -130,7 +130,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRef<
     }
     else {
       y = _initialYPosition;
-      _jumpSpeed = gameRef.jumpSpeed;
+      _jumpSpeed = game.jumpSpeed;
       _isJumping = false;
       _switchState(PlayerState.idle);
     }
