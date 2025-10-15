@@ -103,4 +103,10 @@ Jump Animation, Displacement Formula for Jumping
 
 HasGameRef and gameRef deprecated
 
+##### Lesson 24
+
+Creating Customized Hitbox, Rectangle Hitbox
+
+
+
 <br/>.. more lessons will be added

@@ -3,7 +3,6 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:yunos_adventures/controller.dart';
 import 'package:yunos_adventures/direction.dart';
-import 'package:yunos_adventures/frame_hitbox.dart';
 import 'package:yunos_adventures/player.dart';
 import 'package:yunos_adventures/quick_sprite.dart';
 import 'package:yunos_adventures/tappable_sprite.dart';
@@ -27,7 +26,6 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
   double get gravity => _tileY*2;
   double get _controllerSize => _tileY;
   double get _attackButtonSize => _tileY*0.80;
-  final isDebugMode = true;
 
   @override
   Future<void> onLoad() async {
@@ -49,10 +47,6 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
     camera.viewfinder.anchor = _anchorCameraInitial;
     camera.viewfinder.zoom = _zoomCameraInitial;
     camera.follow(_player);
-
-    FrameHitbox(ratio: Vector2(0.8, 0.8), parentSize: background.size)
-      ..debugMode = isDebugMode
-      ..addToParent(background);
   }
 
   void _onTapController(ControllerState controllerState) {

@@ -5,8 +5,6 @@ import 'package:flame/sprite.dart';
 import 'package:yunos_adventures/direction.dart';
 import 'package:yunos_adventures/yunos_adventures.dart';
 
-import 'frame_hitbox.dart';
-
 enum PlayerState {
   idle,
   run,
@@ -58,11 +56,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameRefe
     };
 
     current = PlayerState.idle;
-
-    FrameHitbox(ratio: Vector2(0.6, 0.9), parentSize: size)
-      ..debugMode = game.isDebugMode
-      ..anchor = Anchor(0.35, -0.1)
-      ..addToParent(this);
   }
 
   void _switchState(PlayerState playerState) => current = playerState;
