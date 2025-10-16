@@ -107,6 +107,10 @@ HasGameRef and gameRef deprecated
 
 Creating Customized Hitbox, Rectangle Hitbox
 
+##### Lesson 25
+
+Detecting Collisions, Has Collision Detection, Collision Callbacks
+
 
 
 <br/>.. more lessons will be added

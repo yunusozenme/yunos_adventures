@@ -1,11 +1,10 @@
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame/sprite.dart';
 import 'package:yunos_adventures/direction.dart';
-import 'package:yunos_adventures/quick_sprite.dart';
 import 'package:yunos_adventures/yunos_adventures.dart';
+
 import 'frame_hitbox.dart';
 
 enum PlayerState {
@@ -19,15 +18,11 @@ enum PlayerState {
   slide,
 }
 
-class Player extends SpriteAnimationGroupComponent<PlayerState>
-    with HasGameReference<YunosAdventures>, CollisionCallbacks {
+class Player extends SpriteAnimationGroupComponent<PlayerState> with HasGameReference<YunosAdventures> {
   Direction _playerDirection = Direction.right;
   late double _playerSpeed;
   late double _jumpSpeed;
   late double _gravity;
-  late double _collisionStartPoint;
-  late double _collisionEndPoint;
-  late double _initialXPosition;
   late double _initialYPosition;
   double _attackRotation = tau/18; // 20 degrees
   bool _isAttacking = false;
@@ -39,7 +34,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     _jumpSpeed = game.jumpSpeed;
     _gravity = game.gravity;
     _initialYPosition = game.positionPlayerInitial.y;
-    _initialXPosition = game.positionPlayerInitial.x;
     anchor = const Anchor(0.35, 1);
     final spriteSheet = SpriteSheet(image: await game.images.load('sprite_sheet_mascot.png'), srcSize: Vector2(462, 456));
 
@@ -69,29 +63,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
       ..debugMode = game.isDebugMode
       ..anchor = Anchor(0.35, -0.1)
       ..addToParent(this);
-  }
-
-
-  @override
-  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollisionStart(intersectionPoints, other);
-    if(other is QuickSprite && _playerDirection == Direction.left && x < _initialXPosition) {
-      _collisionStartPoint = x;
-    }
-    if(other is QuickSprite && _playerDirection == Direction.right && x > _initialXPosition) {
-      _collisionEndPoint = x;
-    }
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    if(other is QuickSprite && _playerDirection == Direction.left && x < _initialXPosition) {
-      x = _collisionStartPoint;
-    }
-    if(other is QuickSprite && _playerDirection == Direction.right && x > _initialXPosition) {
-      x = _collisionEndPoint;
-    }
   }
 
   void _switchState(PlayerState playerState) => current = playerState;

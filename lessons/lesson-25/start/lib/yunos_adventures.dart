@@ -8,7 +8,7 @@ import 'package:yunos_adventures/player.dart';
 import 'package:yunos_adventures/quick_sprite.dart';
 import 'package:yunos_adventures/tappable_sprite.dart';
 
-class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents, HasCollisionDetection {
+class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents {
   late final double _tileX;
   late final double _tileY;
   final _player = Player();
@@ -18,7 +18,7 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents, HasCo
   late final TappableSprite _attackButton;
 
   // initial values
-  Vector2 get positionPlayerInitial => Vector2(2.5*_tileX, 3.25*_tileY);
+  Vector2 get positionPlayerInitial => Vector2(2*_tileX, 3.25*_tileY);
   Vector2 get _scalingPlayerInitial => Vector2.all(_tileX/_player.width);
   static const _anchorCameraInitial = Anchor(0.25, 0.75);
   static const _zoomCameraInitial = 2.0;
@@ -27,7 +27,7 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents, HasCo
   double get gravity => _tileY*2;
   double get _controllerSize => _tileY;
   double get _attackButtonSize => _tileY*0.80;
-  final isDebugMode = false;
+  final isDebugMode = true;
 
   @override
   Future<void> onLoad() async {
