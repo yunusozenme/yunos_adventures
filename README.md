@@ -111,6 +111,10 @@ Creating Customized Hitbox, Rectangle Hitbox
 
 Detecting Collisions, Has Collision Detection, Collision Callbacks
 
+##### Lesson 26
+
+Creating Dialog Boxes with Text Box Component
+
 
 
 <br/>.. more lessons will be added
