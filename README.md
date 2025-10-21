@@ -115,6 +115,10 @@ Detecting Collisions, Has Collision Detection, Collision Callbacks
 
 Creating Dialog Boxes with Text Box Component
 
+##### Lesson 27
+
+Creating Uninterrupted Dialogues
+
 
 
 <br/>.. more lessons will be added

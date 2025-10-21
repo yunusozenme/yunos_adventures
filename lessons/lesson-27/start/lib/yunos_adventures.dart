@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:yunos_adventures/bug_mission_dialogue.dart';
 import 'package:yunos_adventures/controller.dart';
 import 'package:yunos_adventures/dialogue_box.dart';
 import 'package:yunos_adventures/direction.dart';
@@ -19,7 +18,6 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents, HasCo
   ControllerState _controllerState = ControllerState.middle;
   ControllerState get controllerState => _controllerState;
   late final TappableSprite _attackButton;
-  late final BugMissionDialogue _bugMissionDialogue;
 
   // initial values
   Vector2 get positionPlayerInitial => Vector2(2.5*_tileX, 3.25*_tileY);
@@ -32,20 +30,17 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents, HasCo
   double get gravity => _tileY*2;
   double get _controllerSize => _tileY;
   double get _attackButtonSize => _tileY*0.80;
-  bool get _bugMissionCondition => _player.position.x > 4.5 * _tileX && !_isInTransition && !_isBugMissionCompleted;
-  bool _isBugMissionCompleted = false;
-  bool _isInTransition = false;
+  bool get _bugMissionCondition => _player.position.x > 4.5 * _tileX && !_isBugSaved;
+  bool _isBugSaved = false;
   final isDebugMode = false;
 
   @override
   Future<void> onLoad() async {
     _tileX = size.x / 10;
     _tileY = size.y / 5;
-    final background = QuickSprite(spriteSize: size.y, spritePath: 'world_background.png',
-        coordinatePlane: CoordinatePlane.Y);
+    final background = QuickSprite(spriteSize: size.y, spritePath: 'world_background.png', coordinatePlane: CoordinatePlane.Y);
 
-    _littleBug = QuickSprite(spriteSize: _tileX/2, spritePath: 'little_bug.png',
-        coordinatePlane: CoordinatePlane.X)
+    _littleBug = QuickSprite(spriteSize: _tileX/2, spritePath: 'little_bug.png', coordinatePlane: CoordinatePlane.Y)
       ..position = _positionLittleBug
       ..anchor = Anchor(0.5, 1);
 
@@ -74,33 +69,25 @@ class YunosAdventures extends FlameGame with HasKeyboardHandlerComponents, HasCo
   @override
   void update(double dt) {
     if(_bugMissionCondition) _startBugMission();
-    if(_isBugMissionCompleted && _littleBug.x > -_littleBug.size.x) _littleBug.x -= 0.2;
     super.update(dt);
   }
 
   void _onTapController(ControllerState controllerState) {
-    if(!_isInTransition) {
-      _controllerState = controllerState;
-      switch (controllerState) {
-        case ControllerState.middle:
-          _player.stop();
-        default:
-          _player.run();
-      }
+    _controllerState = controllerState;
+    switch(controllerState) {
+      case ControllerState.middle:
+        _player.stop();
+      default:
+        _player.run();
     }
   }
 
   void _startBugMission() {
-    _player.stop();
-    _isInTransition = true;
-    _bugMissionDialogue = BugMissionDialogue(dialoguePosition: _player.position + Vector2(_tileX*0.75, -_tileY),
-        size : Vector2(_tileX*3, _tileY*1.5), scale : Vector2.all(0.3), onMissionComplete: _onBugMissionComplete)
+    _isBugSaved = true;
+    DialogueBox(dialogueText: 'Hey Yuno! Save me!')
+      ..position = _player.position + Vector2(_tileX*0.75, -_tileY)
+      ..size = Vector2(_tileX*3, _tileY*1.5)
+      ..scale = Vector2.all(0.3)
       ..addToParent(world);
-  }
-
-  void _onBugMissionComplete() {
-    world.remove(_bugMissionDialogue);
-    _isBugMissionCompleted = true;
-    _isInTransition = false;
   }
 }
